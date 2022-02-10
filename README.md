@@ -20,6 +20,7 @@ So how do we approach this?
 
 My first step was to determine how to match a score to each word, in order to have some information about its probability to be used. I started by mapping the words using Python and Pandas and checking the frequencies of appearance for each letter in the Wordle dictionary. I then averaged the amount of times the letter appeared in the dictionary by the amount of unique letters in the dictionary.
 
+```
 After analysis, the following frequency average was received:
 ------------------------------------------------------------
    Letter  Frequency
@@ -36,11 +37,14 @@ After analysis, the following frequency average was received:
 25      j   1.038462
 
 [26 rows x 2 columns]
+```
 
 The second step was to encode and generate all the possible feedback outcomes. I used a vector of 5 slots (1 per letter) that recives the values (-1,0,1).
+```
 -1: The letter does not exist in the daily word
  0: The letter exists but is misplaced
  1: The letter is correct and in the right location
+ ```
  
 For example: (1,1,1,1,1) - represents guessing the correct word in a given turn.
 Using "itertools" in Python, I generated all the possible 242 combinations of the feedback vectors.
@@ -51,13 +55,15 @@ In step four, I will add more metrics to my generated dictionary data. Each word
 
 Step five was coming up with a formula to calculate the score of each word, derived from the three previously generated metrics.
 The variables in the equation are:
+```
 X - Average Remaining Words: The less, the better.
 Y - Amount of Unique letter: The more, the better.
 Z - Sum of Letter Average Frequency: The larger the better.
+```
 
 And finally the equation to calculate the final score will be: X^(-1)*Y*Z. The word with the highest score, will corelate to the best possible starting guess.
 
-
+```
 After analysis, the following starting letter score was received:
 ------------------------------------------------------------
        Word  Rank_by_remaining words  ...  Score_by_frequency  Calculated_Score
@@ -74,7 +80,7 @@ After analysis, the following starting letter score was received:
 2314  fuzzy                59.042553  ...           46.230769          3.132030
 
 [2315 rows x 5 columns]
-
+```
 From that we can derive that playing the words "Slate","Trace","Crate","" or "Plate" as our first guess, will yeild the maximum amount of data (feedback) for our future guesses. Lets put the theory to the test: if we chose to play the word "Fuzzy", we will only get data for 4 words instead of 5, 1 of which is the letter "Z" which is in the bottom 5 of the average appearance possibility list.
 
 Notes:
