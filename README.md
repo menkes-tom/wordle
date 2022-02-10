@@ -1,8 +1,8 @@
 Playing with Data Science to crack the "Wordle" starting word - Using Pandas with Python
 --------------------------------------------------------------------------------------------------
 
-[Wordle original](https://www.powerlanguage.co.uk/wordle/) - Play the classic 1 word per day game
-[Wordle spin-off](https://wordlegame.org/) - Play an unlimited game
+* [Wordle original](https://www.powerlanguage.co.uk/wordle/) - Play the classic 1 word per day game
+* [Wordle spin-off](https://wordlegame.org/) - Play an unlimited game
 
 
 Wordle is a daily, turn based guess-the-word internet sensation recently bought by the New York Times.
