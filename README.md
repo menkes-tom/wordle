@@ -20,7 +20,7 @@ The goal of this project, is to use data science tools, in order to determine th
 So how do we approach this?
 --------------------------------------------------------------------------------------------------
 
-My first step was to determine how to match a score to each word, in order to have some information about its probability to be used. I started by mapping the words using Python and Pandas and checking the frequencies of appearance for each letter in the Wordle dictionary. I then averaged the amount of times the letter appeared in the dictionary by the amount of unique letters in the dictionary.
+My first step was to determine how to match a score to each word, in order to have some information about its probability to be used. I started by mapping the words using Python and Pandas and checking the frequencies of appearance for each letter in the Wordle dictionary. I then averaged the amount of times the letter appeared in the dictionary by the amount of unique letters in the dictionary. I will also take into account the position of each letter. This means I need to check the average frequency of each letter in the first location, second location and so forth..
 
 ```
 After analysis, the following frequency average was received:
@@ -39,7 +39,17 @@ After analysis, the following frequency average was received:
 25      j   1.038462
 
 [26 rows x 2 columns]
+
+  First_Letter_Frequency  Frequency  ... Fifth_Letter_Frequency  Frequency
+0                      s      14.64  ...                      e  18.434783
+1                      c       7.92  ...                      y  15.826087
+2                      b       6.92  ...                      t  11.000000
+3                      t       5.96  ...                      r   9.217391
+4                      p       5.68  ...                      l   6.782609
+
+
 ```
+We can see that its most likely that a word will start with an 'S' and end with an 'E'
 
 The second step was to encode and generate all the possible feedback outcomes. I used a vector of 5 slots (1 per letter) that recives the values (-1,0,1).
 ```
@@ -61,32 +71,33 @@ The variables in the equation are:
 X - Average Remaining Words: The less, the better.
 Y - Amount of Unique letter: The more, the better.
 Z - Sum of Letter Average Frequency: The larger the better.
+M - Sum of Letter Average Positional Frequency: The larger the better
 ```
 
-And finally the equation to calculate the final score will be: X^(-1)*Y*Z. The word with the highest score, will corelate to the best possible starting guess.
+And finally the equation to calculate the final score will be: X^(-1)*Y*Z*M. The word with the highest score, will corelate to the best possible starting guess.
 
 ```
 After analysis, the following starting letter score was received:
 ------------------------------------------------------------
-       Word  Rank_by_remaining words  ...  Score_by_frequency  Calculated_Score
-0     slate                38.716129  ...          166.500000         21.502666
-1     trace                41.974026  ...          166.038462         19.778715
-2     stale                42.380952  ...          166.500000         19.643258
-3     crate                42.586667  ...          166.038462         19.494184
-4     plate                40.250000  ...          154.884615         19.240325
-...     ...                      ...  ...                 ...               ...
-2310  jiffy                57.483333  ...           60.884615          4.236680
-2311  fizzy                56.113208  ...           54.076923          3.854845
-2312  dizzy                64.080000  ...           60.346154          3.766926
-2313  jazzy                66.391304  ...           58.115385          3.501385
-2314  fuzzy                59.042553  ...           46.230769          3.132030
+       Word  Rank_by_remaining words  ...  Score_by_position  Calculated_Score
+0     slate                38.716129  ...          58.173244       1250.879852
+1     shale                39.941176  ...          56.900936       1092.846721
+2     stale                42.380952  ...          54.324013       1067.100634
+3     crane                41.854167  ...          55.711706       1065.640759
+4     crate                42.586667  ...          53.991706       1052.524235
+...     ...                      ...  ...                ...               ...
+2310  inbox                67.657143  ...          12.526288         82.531324
+2311  nymph                62.828571  ...          12.754247         80.887994
+2312  unzip                76.344828  ...          13.844013         73.929013
+2313  jumbo                70.245614  ...          13.781739         69.610995
+2314  affix                67.176471  ...          13.577057         66.758588
 
-[2315 rows x 5 columns]
+[2315 rows x 6 columns]
 ```
-From that we can derive that playing the words "Slate","Trace","Crate","" or "Plate" as our first guess, will yeild the maximum amount of data (feedback) for our future guesses. Lets put the theory to the test: if we chose to play the word "Fuzzy", we will only get data for 4 words instead of 5, 1 of which is the letter "Z" which is in the bottom 5 of the average appearance possibility list.
+From that we can derive that playing the words "Slate","Stale","Crate","" or "Cane" as our first guess, will yeild the maximum amount of data (feedback) for our future guesses. Lets put the theory to the test: if we chose to play the word "Affix", we will only get data for 4 words instead of 5, 1 of which is the letter "x" which is in the bottom 5 of the average appearance possibility list.
 
 Notes:
 ---------------------------------------------------------------------------------------------------
-1) Since this analysis does not take into account previously used daily goal words, the results are unbiased and are true for even a fresh game of Wordle, as if today was the first every day Wordle is up and running.
+1) Since this analysis does not take into account previously used daily goal words, the results are unbiased and are true for even a fresh game of Wordle, as if today was the first ever day Wordle is up and running.
 2) Words with a relative close "distance" were not filtered out, meaning "Slate" and "Stale" do appeare in the top 5 list even though they are composed of the same letters since positional data of a letter plays a critical role in Wordle.
 3) Words with similate structure such as "Amuse", "Pause" or Abuse" all using the _,_,U,S,E structure, were not filtered out since grouping words with the same structure would require a level of analysis that would spoil the game and leave less room for enjoyment in the future.
