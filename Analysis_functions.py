@@ -2,7 +2,6 @@
 import itertools
 from collections import Counter
 from Progress_bar import *
-import time
 
 
 # create a counter dictionary of letter frequencies
@@ -18,11 +17,36 @@ def averageFrequency(_letter_scores):
     return _letter_scores
 
 
+# create a counter dictionary for letter frequencies per location in word:
+def letterPositionFrequency(_words):
+    concatenation = ["", "", "", "", ""]
+    for _word in _words:
+        for _letter, index in zip(_word, range(5)):
+            concatenation[index]+=_letter
+    return [Counter(concatenation[0]), Counter(concatenation[1]), Counter(concatenation[2]), Counter(concatenation[3]), Counter(concatenation[4])]
+
+
+# average the letter positional frequency across the numbers of letters in the counter dictionary keys
+def averagePositionalFrequency(_letter_positions):
+    for position in _letter_positions:
+        for key in position.keys():
+            position[key] = position[key] / len(position.keys())
+    return _letter_positions
+
+
 # get the score of a word using the letter scores (by frequency) found earlier
-def getScore(_word, _letter_scores):
+def getFrequencyScore(_word, _letter_scores):
     score = 0
     for letter in _word:
         score += _letter_scores[letter]
+    return score
+
+
+# get the score of a word using the letter positional scores (by frequency) found earlier
+def getPositionalScore(_word, _letter_positions):
+    score = 0
+    for letter, index in zip(_word, range(5)):
+        score += _letter_positions[index][letter]
     return score
 
 
@@ -66,7 +90,7 @@ def checkWordAndCombo(_combination, _word, _words):
 
 
 # check all the words against all the combinations of possible outcomes (242 possible outcomes against ~2300 words in the Wordle answer bank)
-def rankStartingScore(_combinations, _words, _letter_scores):
+def rankStartingScore(_combinations, _words, _letter_scores, _letter_positions):
     starting_rank = []
     # Initial call to print 0% progress
     printProgressBarPyCharm(0, len(_words), prefix='Progress:', suffix='Complete', length=50)
@@ -85,11 +109,11 @@ def rankStartingScore(_combinations, _words, _letter_scores):
                 NonZero += 1
         # average the score of all possible next-turn words divided by iterations that provided data
         current_word[1] = current_word[1]/NonZero
-        starting_rank.append([current_word[0], current_word[1], len(set(a_word)), getScore(current_word[0], _letter_scores)])
+        starting_rank.append([current_word[0], current_word[1], len(set(a_word)), getFrequencyScore(current_word[0], _letter_scores), getPositionalScore(current_word[0], _letter_positions)])
+        # calculate the final score
+        starting_rank[-1].append((1/starting_rank[-1][1])*starting_rank[-1][2]*starting_rank[-1][3]*starting_rank[-1][4])
         # Update Progress Bar
         printProgressBarPyCharm(progress, len(_words), prefix='Progress:', suffix='Complete', length=50)
     printProgressBarPyCharm(100, 100, prefix='Progress:', suffix='Complete', length=50)
+    starting_rank.sort(key=lambda x: x[5], reverse=True)
     return starting_rank
-
-
-
