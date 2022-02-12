@@ -55,9 +55,6 @@ def documentLetterPositions(_letter_positions):
 
 # export the word scores to a CSV file, sorted, for future usage or analysis
 def documentWordScores(_words_starting_ranks):
-    # for _word in _words_starting_ranks:
-    #     _word.append((1/_word[1])*_word[2]*_word[3])
-    # _words_starting_ranks.sort(key=lambda x: x[5], reverse=True)
     words_data_frame = DataFrame(_words_starting_ranks, columns=['Word', 'Rank_by_remaining words', 'Unique_letters', 'Score_by_frequency', 'Score_by_position', 'Calculated_Score'])
     words_data_frame.to_csv('data/Starting_Ranks.csv')
     print(words_data_frame)
