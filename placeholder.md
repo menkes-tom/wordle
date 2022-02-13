@@ -1,4 +1,5 @@
 ```
+Progress: |██████████████████████████████████████████████████| 100.0% Complete
 Operation took 35151.107564 seconds.
    Number_of_turns  Games_won
 0                1          1
