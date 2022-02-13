@@ -1,4 +1,4 @@
-'''
+```
 Operation took 35151.107564 seconds.
    Number_of_turns  Games_won
 0                1          1
@@ -10,4 +10,4 @@ Operation took 35151.107564 seconds.
 6               -1        134
 
 Process finished with exit code 0
-'''
+```
