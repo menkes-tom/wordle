@@ -20,7 +20,7 @@ The goal of this project, is to use data science tools, in order to determine th
 So how do we approach this?
 --------------------------------------------------------------------------------------------------
 
-### * Step 1
+### - Step 1
 My first step was to determine how to match a score to each word, in order to have some information about its probability to be used. I started by mapping the words using Python and Pandas and checking the frequencies of appearance for each letter in the Wordle dictionary. I then averaged the amount of times the letter appeared in the dictionary by the amount of unique letters in the dictionary. I will also take into account the position of each letter. This means I need to check the average frequency of each letter in the first location, second location and so forth..
 
 ```
