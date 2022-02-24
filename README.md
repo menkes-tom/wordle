@@ -96,6 +96,30 @@ After analysis, the following starting letter score was received:
 ```
 From that we can derive that playing the words "Slate","Stale","Crate","" or "Cane" as our first guess, will yeild the maximum amount of data (feedback) for our future guesses. Lets put the theory to the test: if we chose to play the word "Affix", we will only get data for 4 words instead of 5, 1 of which is the letter "x" which is in the bottom 5 of the average appearance possibility list.
 
+So how do we verify these results? Since the data set is complete, we can start playing wordle using the word "slate" and check to see how it goes. but where is the fun in that? 
+"Why do something by hand for 6 minutes when you can spend 6 hours automating it?"
+
+Step six. I wrote a script that plays the game "Wordle". The script simulates a game of wordle by getting a goal-word and a first word - in our case, the first played word will always be "slate" in order to verify our results from the previous step. After checking the initial guess, the game script goes through the proccess of using the algorithm to get the second word with the highest score, and continues to play until the game was either won or lost and exports the data.
+
+Step seven. Now that we can simulate a full game of "Wordle", I used this script to iterate over all the words in the "Wordle" dictionary and document the results of each game against the starting word "slate" and saved them into a histogram (-1 turns means the game was lost, the goal word was not acheieved by my script; 0 turns, the trivial solution, is when the goal-word was "slate", same as the first played word):
+
+```
+Progress: |██████████████████████████████████████████████████| 100.0% Complete
+   Number_of_turns  Games_won
+0                1          1
+1                2         92
+2                3        515
+3                4        775
+4                5        560
+5                6        238
+6               -1        134
+
+Process finished with exit code 0
+```
+
+A quick calculation of the winnning frequency will show that the algorithm wins a game of wordle 94.21% of the time in 6 turns or less, where most games were won in 4 games or less. I was satisfied (for now) with an inaccuracy rate of around 5%.
+
+
 Notes:
 ---------------------------------------------------------------------------------------------------
 1) Since this analysis does not take into account previously used daily goal words, the results are unbiased and are true for even a fresh game of Wordle, as if today was the first ever day Wordle is up and running.
