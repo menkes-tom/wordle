@@ -90,10 +90,11 @@ def checkWordAndCombo(_combination, _word, _words):
 
 
 # check all the words against all the combinations of possible outcomes (242 possible outcomes against ~2300 words in the Wordle answer bank)
-def rankStartingScore(_combinations, _words, _letter_scores, _letter_positions):
+def rankStartingScore(_combinations, _words, _letter_scores, _letter_positions, showProgress=False):
     starting_rank = []
     # Initial call to print 0% progress
-    printProgressBarPyCharm(0, len(_words), prefix='Progress:', suffix='Complete', length=50)
+    if showProgress:
+        printProgressBarPyCharm(0, len(_words), prefix='Progress:', suffix='Complete', length=50)
     # iterate over all the words in the word bank
     for a_word, progress in zip(_words, range(len(_words))):
         current_word = ["", 0]  # word and score combo
@@ -108,12 +109,17 @@ def rankStartingScore(_combinations, _words, _letter_scores, _letter_positions):
             if len(checkWordAndCombo(combination, a_word, _words)) != 0:
                 NonZero += 1
         # average the score of all possible next-turn words divided by iterations that provided data
-        current_word[1] = current_word[1]/NonZero
+        if NonZero > 0:
+            current_word[1] = current_word[1]/NonZero
+        else:
+            current_word[1] = 1
         starting_rank.append([current_word[0], current_word[1], len(set(a_word)), getFrequencyScore(current_word[0], _letter_scores), getPositionalScore(current_word[0], _letter_positions)])
         # calculate the final score
         starting_rank[-1].append((1/starting_rank[-1][1])*starting_rank[-1][2]*starting_rank[-1][3]*starting_rank[-1][4])
         # Update Progress Bar
-        printProgressBarPyCharm(progress, len(_words), prefix='Progress:', suffix='Complete', length=50)
-    printProgressBarPyCharm(100, 100, prefix='Progress:', suffix='Complete', length=50)
+        if showProgress:
+            printProgressBarPyCharm(progress, len(_words), prefix='Progress:', suffix='Complete', length=50)
+    if showProgress:
+        printProgressBarPyCharm(100, 100, prefix='Progress:', suffix='Complete', length=50)
     starting_rank.sort(key=lambda x: x[5], reverse=True)
     return starting_rank

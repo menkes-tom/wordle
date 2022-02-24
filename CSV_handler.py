@@ -59,3 +59,10 @@ def documentWordScores(_words_starting_ranks):
     words_data_frame.to_csv('data/Starting_Ranks.csv')
     print(words_data_frame)
 
+
+# export the game records to a CSV file, sorted, for future usage or analysis
+def documentGameRecords(_game_records):
+    game_records_data_frame = DataFrame(list(_game_records.items()), columns=['Number_of_turns', 'Games_won'])
+    game_records_data_frame.to_csv('data/Game_Records.csv')
+    print(game_records_data_frame)
+
