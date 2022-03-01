@@ -11,7 +11,7 @@ The rules are simple, you try and guess a 5 letter word and recieve feedback bas
 For example: if the daily word is "stale", and we guessed the word "steps" we will get the following feedback:
 (S - correct, T - correct, E - misplaced, P - not in the word, S - misplaced)
 And we now know we better proceed with our next guess in the following format:
-S,T,_,_,_ - where one of the blanks should be the letter 'E', but not the third letter.
+S,T, _ , _ , _ - where one of the blanks should be the letter 'E', but not the third letter.
 
 So what is the best way to use this feedback to our advantage?
 
