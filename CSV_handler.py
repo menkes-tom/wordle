@@ -7,8 +7,8 @@ def readResult():
     try:
         word_bank = read_csv('data/Starting_Ranks.csv', index_col=False)
         result = word_bank.values.tolist()
-        for line in result:
-            line.pop(0)
+        # for line in result:
+        #     line.pop(0)
         new_dataframe = DataFrame(result, columns=['Word', 'Rank_by_remaining words', 'Unique_letters', 'Score_by_frequency', 'Calculated_Score'])
         return new_dataframe
     except FileNotFoundError:
