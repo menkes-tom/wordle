@@ -21,6 +21,8 @@ Operation took 1563.901722 seconds.
 Process finished with exit code 0
 ```
 
+The script "Game_simulation.py" was also added to manually simulate a game of wordle to allow a "guided" playthough of a live challenge.
+
 
 Playing with Data Science to crack the "Wordle" starting word - Using Pandas with Python
 --------------------------------------------------------------------------------------------------
