@@ -1,3 +1,27 @@
+December 2022 Update:
+--------------------------------------------------------------------------------------------------
+After further optimization and a minor logic fix, this project now plays all the wordle dictionary options and weighs them at around 11 minutes. This is a major step forward considering the previous version did so in about 6 hours.
+
+The major change was made to the filtering logic that was basing its answer on the feedback of the previous turns. Missing letters from each played word were checked only by their location in the word and not by their existance in the word as a whole.
+
+This made sure the filtration proccess is much more accurate and efficient, netting a 99.5% sucess rate of winning a game of wordle at 6 or less turns.
+
+```
+Progress: |██████████████████████████████████████████████████| 100.0% Complete
+Operation took 1563.901722 seconds.
+   Number_of_turns  Games_won
+0                1          1
+1                2        146
+2                3       1008
+3                4        933
+4                5        181
+5                6         34
+6               -1         12
+
+Process finished with exit code 0
+```
+
+
 Playing with Data Science to crack the "Wordle" starting word - Using Pandas with Python
 --------------------------------------------------------------------------------------------------
 
