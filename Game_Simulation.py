@@ -16,11 +16,16 @@ def playTurn(_game, _word, _word_list, previous_feedback):
 
 
 word_list = readData()
-game = Game()
+game = Game(_max_turns=1000)
 
 while not game.game_won or not game.game_over:
     feedback = [0, 0, 0, 0, 0]
     played_word = input("Enter your last played word: ")
+    if played_word == "win":
+        break
+    if played_word == "re":
+        word_list = readData()
+        continue
     for letter in list(enumerate(played_word)):
         _str = "Enter feedback for the letter: " + str(letter[1]) +  ", in position: " + str(letter[0]+1) + " = "
         feedback[letter[0]] = int(input(_str))

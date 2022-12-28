@@ -63,22 +63,27 @@ def possibleCombinations():
 
 # check the remaining words after playing the first word and comparing it with a combination of a given answer (received feedback for a guessed word)
 def checkWordAndCombo(_combination, _word, _words):
+    vowles = ['a','e','i','o','u']
     # -1 wrong letter, 0 right letter wrong place, 1 right letter right place
     words_to_check = _words.copy()
     misplaced_letters = []
     refreshed_list = []
     for slot, index in zip(_combination, range(5)):
         if slot == -1:
+            if _word[index] == "_":
+                continue
             # if the letter is not in the target word at all, clear the words with that letter at that location
-            words_to_check = [x for x in words_to_check if _word[index] not in x]
-        if slot == 0:
+            words_to_check = [x for x in words_to_check if ((_word[index] not in x or _word[index] in vowles) and _word[index] != x[index])]
+        elif slot == 0:
             # if the letter is not in the target word at a specific location, clear the words with that letter at that location
             words_to_check = [x for x in words_to_check if x[index] != _word[index]]
             # add the letter to a collection of misplaced letters
             misplaced_letters.append(_word[index])
-        if slot == 1:
+        elif slot == 1:
             # if the letter is in the target word at the correct location, clear the words with that don't have that letter at that location
             words_to_check = [x for x in words_to_check if x[index] == _word[index]]
+        else:
+            continue
     if misplaced_letters:
         # if there were misplaced letters, create a new list of words that contain all the misplaced letters
         for a_word in words_to_check:
