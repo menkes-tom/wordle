@@ -2,7 +2,7 @@
 from CSV_handler import *
 import time
 from Progress_bar import *
-from Play_wordle import playWordle, printResults
+from Play_wordle_auto import playWordle, printResults
 
 # load the dictionary from a CSV file and maintain a list of game results
 word_list = readData()

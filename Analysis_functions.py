@@ -70,7 +70,7 @@ def checkWordAndCombo(_combination, _word, _words):
     for slot, index in zip(_combination, range(5)):
         if slot == -1:
             # if the letter is not in the target word at all, clear the words with that letter at that location
-            words_to_check = [x for x in words_to_check if x[index] != _word[index]]
+            words_to_check = [x for x in words_to_check if _word[index] not in x]
         if slot == 0:
             # if the letter is not in the target word at a specific location, clear the words with that letter at that location
             words_to_check = [x for x in words_to_check if x[index] != _word[index]]

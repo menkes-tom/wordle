@@ -4,7 +4,7 @@ from CSV_handler import *
 
 def getNewGuess(_word_list):
     # read the dictionary data from Wordle
-    word_list = _word_list
+    word_list = _word_list.copy()
     # score the English letters by their frequency in the Wordle dictionary
     letter_scores = getFrequency(word_list)
     # average the frequency of each letter by the number of letters used in the dictionary
