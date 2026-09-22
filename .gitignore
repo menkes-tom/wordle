@@ -1,0 +1,8 @@
+scratch_pshaw.py
+src/__pycache__/__init__.cpython-314.pyc
+src/__pycache__/analysis_functions.cpython-314.pyc
+src/__pycache__/csv_handler.cpython-314.pyc
+src/__pycache__/game_objects.cpython-314.pyc
+src/__pycache__/play_wordle_auto.cpython-314.pyc
+src/__pycache__/progress_bar.cpython-314.pyc
+src/__pycache__/score_dictionary.cpython-314.pyc
